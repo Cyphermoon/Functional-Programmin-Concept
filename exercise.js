@@ -36,7 +36,7 @@ const formatClock = format => time =>
 
 const prependZero = key => clockTime => ({
     ...clockTime,
-    key: clockTime[key] < 10 ? "0" + clockTime[key] : clockTime[key]
+    [key]: clockTime[key] < 10 ? "0" + clockTime[key] : clockTime[key]
 })
 
 
@@ -52,15 +52,15 @@ const doubleDigits = civilianTime => compose(
 )(civilianTime)
 
 const startTicking = () => {
-    setInterval(compose(
-        clear,
-        getCurrentTime,
-        serializeClockTime,
-        convertToCivilianClockTime,
-        doubleDigits,
-        formatClock("hh:mm:ss tt"),
-        display(log)
-    ), oneSecond())
+    setInterval(
+        compose(
+            getCurrentTime,
+            serializeClockTime,
+            convertToCivilianClockTime,
+            doubleDigits,
+            formatClock("hh:mm:ss tt"),
+            display(log)
+        ),
+        oneSecond())
 }
 
-startTicking()
